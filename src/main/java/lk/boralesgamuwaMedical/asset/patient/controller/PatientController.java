@@ -37,14 +37,6 @@ public class PatientController {
         return "patient/addPatient";
     }
 
-   /* //When scr called file will send to
-    @GetMapping( "/file/{filename}" )
-    public ResponseEntity< byte[] > downloadFile(@PathVariable( "filename" ) String filename) {
-        EmployeeFiles file = employeeFilesService.findByNewID(filename);
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getName() + "\"")
-                .body(file.getPic());
-    }*/
 
     //Send all employee data
     @RequestMapping
@@ -95,50 +87,7 @@ public class PatientController {
         patient.setMobileTwo(commonService.commonMobileNumberLengthValidator(patient.getMobileTwo()));
         //after save employee files and save employee
         patientService.persist(patient);
-       /* try {
-            patient.setMobileOne(commonService.commonMobileNumberLengthValidator(patient.getMobileOne()));
-            patient.setMobileTwo(commonService.commonMobileNumberLengthValidator(patient.getMobileTwo()));
-            //after save employee files and save employee
-            patientService.persist(patient);
 
-            //if employee state is not working he or she cannot access to the system
-            *//*if ( !patient.getEmployeeStatus().equals(EmployeeStatus.WORKING) ) {
-                User user = userService.findUserByEmployee(employeeService.findByNic(employee.getNic()));
-                //if employee not a user
-                if ( user != null ) {
-                    user.setEnabled(false);
-                    userService.persist(user);
-                }
-            }*//*
-            //save employee images file
-          *//*  for ( MultipartFile file : employee.getFiles() ) {
-                if ( file.getOriginalFilename() != null ) {
-                    EmployeeFiles employeeFiles = employeeFilesService.findByName(file.getOriginalFilename());
-                    if ( employeeFiles != null ) {
-                        // update new contents
-                        employeeFiles.setPic(file.getBytes());
-                        // Save all to database
-                    } else {
-                        employeeFiles = new EmployeeFiles(file.getOriginalFilename(),
-                                file.getContentType(),
-                                file.getBytes(),
-                                employee.getNic().concat("-" + LocalDateTime.now()),
-                                UUID.randomUUID().toString().concat("employee"));
-                        employeeFiles.setEmployee(employee);
-                    }
-                    employeeFilesService.persist(employeeFiles);
-                }
-            }*//*
-            return "redirect:/patient";
-
-        } catch ( Exception e ) {
-            ObjectError error = new ObjectError("patient",
-                    "There is already in the system. <br>System message -->" + e.toString());
-            result.addError(error);
-            model.addAttribute("addStatus", true);
-            model.addAttribute("patient", patient);
-            return commonThings(model);
-        }*/
 
         return "redirect:/patient";
     }
@@ -157,68 +106,6 @@ public class PatientController {
         return "patient/patient-detail";
     }
 
-//----> Employee details management - end <----//
-    //````````````````````````````````````````````````````````````````````````````//
-//----> EmployeeWorkingPlace - details management - start <----//
-
-  /*  //Send form to add working place before find employee
-    @GetMapping( value = "/workingPlace" )
-    public String addEmployeeWorkingPlaceForm(Model model) {
-        model.addAttribute("employee", new Employee());
-        model.addAttribute("employeeDetailShow", false);
-        return "employeeWorkingPlace/addEmployeeWorkingPlace";
-    }
-*/
-    //Send a searched employee to add working place
-/*
-    @PostMapping( value = "/workingPlace" )
-    public String addWorkingPlaceEmployeeDetails(@ModelAttribute( "employee" ) Employee employee, Model model) {
-
-        List< Employee > employees = employeeService.search(employee);
-        if ( employees.size() == 1 ) {
-            model.addAttribute("employeeDetailShow", true);
-            model.addAttribute("employeeNotFoundShow", false);
-            model.addAttribute("employeeDetail", employees.get(0));
-            model.addAttribute("files", employeeFilesService.employeeFileDownloadLinks(employee).get(0));
-            model.addAttribute("employeeWorkingPlaceHistoryObject", new EmployeeWorkingPlaceHistory());
-            model.addAttribute("workingPlaceChangeReason", WorkingPlaceChangeReason.values());
-            model.addAttribute("province", Province.values());
-            model.addAttribute("districtUrl", MvcUriComponentsBuilder
-                    .fromMethodName(WorkingPlaceRestController.class, "getDistrict", "")
-                    .build()
-                    .toString());
-            model.addAttribute("stationUrl", MvcUriComponentsBuilder
-                    .fromMethodName(WorkingPlaceRestController.class, "getStation", "")
-                    .build()
-                    .toString());
-            return "employeeWorkingPlace/addEmployeeWorkingPlace";
-        }
-        model.addAttribute("employee", new Employee());
-        model.addAttribute("employeeDetailShow", false);
-        model.addAttribute("employeeNotFoundShow", true);
-        model.addAttribute("employeeNotFound", "There is not employee in the system according to the provided details" +
-                " \n Could you please search again !!");
-
-        return "employeeWorkingPlace/addEmployeeWorkingPlace";
-    }
-
-    @PostMapping( value = "/workingPlace/add" )
-    public String addWorkingPlaceEmployee(@ModelAttribute( "employeeWorkingPlaceHistory" ) EmployeeWorkingPlaceHistory employeeWorkingPlaceHistory, Model model) {
-        System.out.println(employeeWorkingPlaceHistory.toString());
-        // -> need to write validation before the save working place
-        //before saving set employee current working palace
-        WorkingPlace workingPlace = employeeWorkingPlaceHistory.getWorkingPlace();
-
-        employeeWorkingPlaceHistory.setWorkingPlace(employeeWorkingPlaceHistory.getEmployee().getWorkingPlace());
-        employeeWorkingPlaceHistory.getEmployee().setWorkingPlace(workingPlace);
-
-        employeeWorkingPlaceHistory.setWorkingDuration(dateTimeAgeService.dateDifference(employeeWorkingPlaceHistory.getFrom_place(), employeeWorkingPlaceHistory.getTo_place()));
-        employeeWorkingPlaceHistoryService.persist(employeeWorkingPlaceHistory);
-        return "redirect:/employee";
-    }
-*/
-
-//----> EmployeeWorkingPlace - details management - end <----//
 
 }
 

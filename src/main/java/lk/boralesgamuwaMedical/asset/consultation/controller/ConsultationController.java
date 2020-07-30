@@ -3,16 +3,14 @@ package lk.boralesgamuwaMedical.asset.consultation.controller;
 import lk.boralesgamuwaMedical.asset.consultation.entity.Consultation;
 import lk.boralesgamuwaMedical.asset.consultation.service.ConsultationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@Controller
 @RequestMapping("/consultation")
 public class ConsultationController {
     private final ConsultationService consultationService;
@@ -22,27 +20,22 @@ public class ConsultationController {
         this.consultationService = consultationService;
     }
 
-    @RequestMapping
+    @GetMapping
     public String consultationPage(Model model) {
         model.addAttribute("consultations", consultationService.findAll());
         return "consultation/consultation";
     }
 
-/*    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String consultationView(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("consultationDetail", consultationService.findById(id));
-        return "consultation/consultation-detail";
-    }*/
 
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String editConsultationFrom(@PathVariable("id") Integer id, Model model) {
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("consultation", consultationService.findById(id));
         model.addAttribute("addStatus", false);
         return "consultation/addConsultation";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String consultationAddFrom(Model model) {
+    @GetMapping("/add")
+    public String form(Model model) {
         model.addAttribute("addStatus", true);
         model.addAttribute("consultation", new Consultation());
         return "consultation/addConsultation";
@@ -51,12 +44,10 @@ public class ConsultationController {
     // Above method support to send data to front end - All List, update, edit
     //Bellow method support to do back end function save, delete, update, search
 
-    @RequestMapping(value = {"/add", "/update"}, method = RequestMethod.POST)
+    @PostMapping(value = {"/save", "/update"})
     public String addConsultation(@Valid @ModelAttribute Consultation consultation, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            for (FieldError error : result.getFieldErrors()) {
-                System.out.println(error.getField() + ": " + error.getDefaultMessage());
-            }
+
             model.addAttribute("addStatus", false);
             model.addAttribute("consultation", consultation);
             return "consultation/addConsultation";
@@ -66,16 +57,11 @@ public class ConsultationController {
     }
 
 
-    @RequestMapping(value = "/remove/{id}", method = RequestMethod.GET)
-    public String removeConsultation(@PathVariable Integer id) {
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public String delete(@PathVariable Integer id) {
         consultationService.delete(id);
         return "redirect:/consultation";
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public String search(Model model, Consultation consultation) {
-        model.addAttribute("consultationDetail", consultationService.search(consultation));
-        return "consultation/consultation-detail";
-    }
 
 }

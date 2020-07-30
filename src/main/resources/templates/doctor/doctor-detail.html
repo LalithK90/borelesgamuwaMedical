@@ -1,10 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head data-th-replace="~{fragments/header :: headerFragment}">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Thymeleaf Springboot </title>
 </head>
 <body>
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
+
+<div class="container-fluid bg-secondary form-Border">
+    <div class="row text-center formManagement border-info">
+        <div class="col">
+            <a class="btn btn-primary" href="/home">
+                <i class="fa fa-home" style="font-size: 20px"></i> &nbsp; Home
+            </a>
+        </div>
+        <div class="col">
+            <h4 class="text-light text-center">
+                <strong>
+                    <span data-th-text="${doctorDetail.name}"></span>
+                </strong>
+            </h4>
+        </div>
+        <div class="col">
+            <a class="btn btn-primary" href="/doctor">
+                <i class="fa fa-list"></i>&nbsp; View List
+            </a>
+        </div>
+    </div>
+</div>
+<!--Form Content - start -->
+<div class="container-fluid bg-dark formBorder">
+    <div class="col-sm-12 flex-column ">
+        <div class="row">
+            <!--Left Side-->
+            <div class="form-group col-md-6 col-sm-6 text-left flex-column">
+                <!--Id-->
+                <div class="form-row text-right">
+                    <div class="col-md-4">
+                        <label class="control-label">Code:</label>
+                    </div>
+                    <div class="col-md-8">
+                        <p data-th-text="${doctorDetail.code}"></p>
+                    </div>
+                </div>
+                <!--Tittle -->
+                <div class="form-row text-right">
+                    <div class="col-md-4">
+                        <label class="control-label">Title :</label>
+                    </div>
+                    <div class="col-md-8">
+                        <p data-th-text="${doctorDetail.title.title}"></p>
+                    </div>
+                </div>
+                <!--Name-->
+                <div class="form-row text-right">
+                    <div class="col-md-4">
+                        <label class="control-label">Name :</label>
+                    </div>
+                    <div class="col-md-8">
+                        <p data-th-text="${doctorDetail.name}"></p></div>
+                </div>
+                <!--Gender-->
+                <div class="form-row text-right">
+                    <div class="col-md-4">
+                        <label class="control-label">Gender :</label>
+                    </div>
+                    <div class="col-md-8">
+
+                        <p data-th-text="${doctorDetail.gender.gender}"></p>
+                    </div>
+                </div>
+
+                <!--Mobile Number One-->
+                <div class="form-row text-right">
+                    <div class="col-md-4">
+                        <label class="control-label">Mobile No :</label>
+                    </div>
+                    <div class="col-md-8">
+
+                        <p data-th-text="${doctorDetail.mobile}"></p>
+                    </div>
+                </div>
+                <!--SLMC Number-->
+                <div class="form-row text-right">
+                    <div class="col-md-4">
+                        <label class="control-label">SLMC No :</label>
+                    </div>
+                    <div class="col-md-8">
+
+                        <p data-th-text="${doctorDetail.slmcNumber}"></p>
+                    </div>
+                </div>
+                <!--Email-->
+                <div class="form-row text-right">
+                    <div class="col-md-4">
+                        <label class="control-label" >Email :</label>
+                    </div>
+                    <div class="col-md-8">
+                        <p data-th-text="${doctorDetail.email}"></p> </div>
+                </div>
+                <!--Consultation -->
+                <div class="form-row text-right">
+                    <div class="col-md-4">
+                        <label class="control-label">Consultation :</label>
+                    </div>
+                    <div class="col-md-8">
+
+                        <p data-th-text="${doctorDetail.consultation.name}"></p>
+                    </div>
+                </div>
+                <!--Created by and created at-->
+                <div class="form-row text-right">
+                    <div class="col-md-4">
+                        <label class="control-label">Created At :</label>
+                    </div>
+                    <div class="col-md-8">
+
+                        <p data-th-text="${{doctorDetail.createdAt}}"></p>
+                    </div>
+                </div>
+                <div class="form-row text-right">
+                    <div class="col-md-4">
+                        <label class="control-label">Created By :</label>
+                    </div>
+                    <div class="col-md-8">
+
+                        <p data-th-text="${doctorDetail.createdBy}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Button-->
+        <div class="form-group col-md-12 col-sm-12 text-center flex-column ">
+            <a href="/doctor">
+                <button class="btn btn-success" tabindex="21" type="submit">
+                    Back
+                </button>
+            </a>
+        </div>
+
+    </div>
+</div>
+<!--footer include-->
+<footer data-th-replace="~{fragments/footer :: footerFragment}"></footer>
+<!--script include-->
+<script data-th-replace="~{fragments/script :: scriptFragment}"></script>
 
 </body>
 </html>

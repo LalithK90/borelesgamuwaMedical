@@ -4,7 +4,6 @@ package lk.boralesgamuwaMedical.asset.consultation.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Getter
@@ -17,8 +16,7 @@ public class Consultation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Basic
-    @Column(name = "name", nullable = false, length = 45)
+    @Column(nullable = false, length = 45, unique = true)
     private String name;
 
 

@@ -3,22 +3,17 @@ package lk.boralesgamuwaMedical.asset.doctor.controller;
 import lk.boralesgamuwaMedical.asset.commonAsset.model.Enum.Gender;
 import lk.boralesgamuwaMedical.asset.commonAsset.model.Enum.Title;
 import lk.boralesgamuwaMedical.asset.consultation.service.ConsultationService;
-import lk.boralesgamuwaMedical.asset.doctor.entity.Doctor;
 
+import lk.boralesgamuwaMedical.asset.doctor.entity.Doctor;
 import lk.boralesgamuwaMedical.asset.doctor.service.DoctorService;
 import lk.boralesgamuwaMedical.asset.userManagement.service.UserService;
 import lk.boralesgamuwaMedical.util.service.DateTimeAgeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -27,31 +22,26 @@ import javax.validation.Valid;
 public class DoctorController {
     private final DoctorService doctorService;
     private final ConsultationService consultationService;
-    private final DateTimeAgeService dateTimeAgeService;
-    private final UserService userService;
 
     @Autowired
     public DoctorController(DoctorService doctorService, ConsultationService consultationService, DateTimeAgeService dateTimeAgeService, UserService userService) {
         this.doctorService = doctorService;
         this.consultationService = consultationService;
-        this.dateTimeAgeService = dateTimeAgeService;
-        this.userService = userService;
     }
 
-    @RequestMapping
+    @GetMapping
     public String doctorPage(Model model) {
         model.addAttribute("doctors", doctorService.findAll());
         return "doctor/doctor";
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping("/{id}")
     public String doctorView(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("doctorDetail", doctorService.findById(id));
-        model.addAttribute("consultations", consultationService.findAll());
         return "doctor/doctor-detail";
     }
 
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    @GetMapping("/edit/{id}")
     public String editDoctorFrom(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("doctor", doctorService.findById(id));
         model.addAttribute("addStatus", false);
@@ -61,7 +51,7 @@ public class DoctorController {
         return "doctor/addDoctor";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    @GetMapping(value = "/add")
     public String doctorAddFrom(Model model) {
         model.addAttribute("addStatus", true);
         model.addAttribute("consultations", consultationService.findAll());
@@ -74,10 +64,9 @@ public class DoctorController {
     // Above method support to send data to front end - All List, update, edit
     //Bellow method support to do back end function save, delete, update, search
 
-    @RequestMapping(value = {"/save", "/update"}, method = RequestMethod.POST)
+    @PostMapping(value = {"/save", "/update"})
     public String addDoctor(@Valid @ModelAttribute Doctor doctor, BindingResult result, Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Integer userId = userService.findByUserIdByUserName(auth.getName());
+
         if (result.hasErrors()) {
             for (FieldError error : result.getFieldErrors()) {
                 System.out.println(error.getField() + ": " + error.getDefaultMessage());
@@ -101,15 +90,10 @@ public class DoctorController {
         return "redirect:/doctor";
     }
 
-    @RequestMapping(value = "/remove/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/remove/{id}")
     public String removeDoctor(@PathVariable Integer id) {
         doctorService.delete(id);
         return "redirect:/doctor";
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public String search(Model model, Doctor doctor) {
-        model.addAttribute("doctorDetail", doctorService.search(doctor));
-        return "doctor/doctor-detail";
-    }
 }

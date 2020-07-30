@@ -10,18 +10,18 @@
 <div class="container-fluid bg-secondary form-Border">
     <div class="row text-center formManagement border-info">
         <div class="col">
-            <a class="btn btn-success" href="/patient/add"><i class="fa fa-user-plus"></i>
-                &nbsp; New Patient</a>
+            <a class="btn btn-success" href="/consultation/add"><i class="fa fa-user-plus"></i>
+                &nbsp; New Consultation</a>
         </div>
         <div class="col">
             <h4 class="text-info text-center">
                 <strong>
-                    Patient Management
+                    Consultation Management
                 </strong>
             </h4>
         </div>
         <div class="col">
-           <!-- <a href="/patient/workingPlace" id="searchShow" class="btn btn-primary">
+           <!-- <a href="/consultation/workingPlace" id="searchShow" class="btn btn-primary">
                 <i class="fa fa-user " style="font-size: 20px"></i>&nbsp;Add&nbsp;
                 <i class="fas fa-store-alt" style="font-size: 20px"></i>
                 &nbsp;
@@ -31,42 +31,24 @@
 </div>
 <div class="container-fluid bg-dark formBorder text-center">
     <div class="col">
-        <div class="col" id="patientListPresent" th:if="${not #lists.isEmpty(patients)}">
+        <div class="col" id="consultationListPresent" th:if="${not #lists.isEmpty(consultations)}">
             <table class="table table-hover table-striped" id="myTable">
                 <thead>
                 <tr>
-                    <th> Id</th>
-                    <th> Code</th>
+                    <th> Index</th>
                     <th> Name</th>
-                    <!--<th> Age</th>-->
-                    <th> Nic</th>
-                    <th> Mobile</th>
-                    <th> Mobile2 (Optional)</th>
-                    <th> Address</th>
-                    <th> Gender</th>
-                    <th> Allergies</th>
-
+                    <th> Modify</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="patient, rowCount : ${patients}">
+                <tr th:each="consultation, rowCount : ${consultations}">
                     <th th:text="${rowCount.count}"></th>
-                    <th th:text="${patient.code}"></th>
-                    <th th:text="${patient.name}"></th>
-                   <!-- <th th:text="${patient.}"></th>-->
-                    <th th:text="${patient.nic}"></th>
-                    <th th:text="${patient.mobileOne}"></th>
-                    <th th:text="${patient.mobileTwo}"></th>
-                    <th th:text="${patient.address}"></th>
-                    <th th:text="${patient.gender}"></th>
-                    <th th:text="${patient.allergies}"></th>
-
+                    <th th:text="${consultation.name}"></th>
                     <th>
-                        <a id="patientView" th:href="${'/patient/' + patient.id}" class="btn btn-success btn-sm"><i
-                                class="fa fa-folder-open"></i>&nbsp;View</a>
-                        <a id="patientEdit" th:href="${'/patient/edit/' + patient.id}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>&nbsp;Edit</a>
-                        <a id="patientRemove" th:href="${'/patient/remove/' + patient.id}"
-                           th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>
+                        <a id="consultationEdit" th:href="${'/consultation/edit/' + consultation.id}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>&nbsp;Edit</a>
+                        <a id="consultationRemove" th:href="${'/consultation/delete/' + consultation.id}"
+                           th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="btn btn-danger btn-sm">
+                            <i class="fa fa-trash"></i>
                             Delete</a>
                     </th>
                 </tr>
@@ -74,14 +56,14 @@
             </table>
         </div>
     </div>
-    <div class="row" th:if="${ #lists.isEmpty(patients)}">
+    <div class="row" th:if="${ #lists.isEmpty(consultations)}">
         <div class="col-sm-12">
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h3 class="text-center text-danger">
-                    <strong>There is no patient upto now please add patient to the system
+                    <strong>There is no consultation upto now please add consultation to the system
                         using add user button.
                     </strong>
                 </h3>

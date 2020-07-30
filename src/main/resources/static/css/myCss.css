@@ -17,6 +17,8 @@ body {
     background-image: url('../img/loginBackground.jpg');
     background-size: cover;
     background-repeat: no-repeat;
+    height: auto; /*by me*/
+
 }
 
 /*html Background - end*/

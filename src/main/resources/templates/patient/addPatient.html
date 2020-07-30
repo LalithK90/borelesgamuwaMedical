@@ -175,20 +175,19 @@
                         </div>
                     </div>
 
-                    <!--Current Working Place-->
-                    <!-- <div class="form-row text-right">
-                         <div class="col-md-4">
-                             <label class="control-label" for="workingPlace">Patient Working Place :</label>
-                         </div>
-                         <div class="col-md-8">
-                             <select id="workingPlace" th:field="*{workingPlace}" class="form-control" tabindex="20" required>
-                                 <option value="">Please select</option>
-                                 <option th:each="workingPlace : ${workingPlaces}"
-                                         th:text="${workingPlace.name}"
-                                         th:value="${workingPlace.id}"></option>
-                             </select>
-                         </div>
-                     </div>-->
+                   <!-- Allergies-->
+                    <div class="form-row text-right">
+                        <div class="col-md-4">
+                            <label class="control-label" for="allergies">Allergies :</label>
+                        </div>
+                        <div class="col-md-8">
+                            <textarea id="allergies" th:field="*{allergies}" class="form-control" tabindex="12"
+                                      required></textarea>
+                            <span class="error" th:errors="*{allergies}"
+                                  th:if="${#fields.hasErrors('address')}" id="allergiesError">Error Address</span>
+                        </div>
+                    </div>
+
                     <!--Created by and created at-->
                     <div id="updateStatus" th:if="${addStatus==false}">
                         <div class="form-row text-right">
@@ -253,8 +252,7 @@
                     <!--Button-->
                     <div class="form-group col-md-12 col-sm-12 text-center flex-column ">
                         <button class="btn btn-success" type="submit" tabindex="21">
-                            <i class="fa fa-save " style="font-size: 20px"></i>&nbsp; &nbsp;<span id="submit"
-                                                                                                  th:text="${addStatus==true?'Save': 'Update'}"></span>
+                            <i class="fa fa-save " style="font-size: 20px"></i>&nbsp; &nbsp;<span id="submit" th:text="${addStatus==true?'Save': 'Update'}"></span>
                         </button>
                     </div>
                 </div>

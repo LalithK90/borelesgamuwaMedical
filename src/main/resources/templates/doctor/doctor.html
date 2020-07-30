@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/header :: headerFragment}">
+<head data-th-replace="~{fragments/header :: headerFragment}">
     <meta charset="UTF-8">
     <title>Thymeleaf Springboot </title>
 </head>
 <body>
-<nav th:replace="~{fragments/navBar :: navBarFragment}"></nav>
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
 
 <div class="container-fluid bg-secondary form-Border">
     <div class="row text-center formManagement border-info">
@@ -21,43 +21,47 @@
             </h4>
         </div>
         <div class="col">
-           <!-- <a href="/doctor/workingPlace" id="searchShow" class="btn btn-primary">
-                <i class="fa fa-user " style="font-size: 20px"></i>&nbsp;Add&nbsp;
-                <i class="fas fa-store-alt" style="font-size: 20px"></i>
-                &nbsp;
-            </a>-->
+            <!-- <a href="/doctor/workingPlace" id="searchShow" class="btn btn-primary">
+                 <i class="fa fa-user " style="font-size: 20px"></i>&nbsp;Add&nbsp;
+                 <i class="fas fa-store-alt" style="font-size: 20px"></i>
+                 &nbsp;
+             </a>-->
         </div>
     </div>
 </div>
 <div class="container-fluid bg-dark formBorder text-center">
     <div class="col">
-        <div class="col" id="doctorListPresent" th:if="${not #lists.isEmpty(doctors)}">
+        <div class="col" id="doctorListPresent" data-th-if="${not #lists.isEmpty(doctors)}">
             <table class="table table-hover table-striped" id="myTable">
                 <thead>
                 <tr>
-                    <th> Code</th>
+                    <th>Index</th>
+                    <!--<th> Code</th>-->
                     <th> Name</th>
                     <th> SLMC No</th>
                     <th> Gender</th>
                     <th> Mobile</th>
-                    <th> Nic</th>
                     <th> Consultancy</th>
+                    <th>Modify</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="doctor, rowCount : ${doctors}">
-                    <th th:text="${rowCount.count}"></th>
-                    <!--<th th:text="${doctor.code}"></th>-->
-                    <th th:text="${doctor.slmcNumber}"></th>
-                    <th th:text="${doctor.gender}"></th>
-                    <th th:text="${doctor.mobile}"></th>
-                    <th th:text="${doctor.consultation}"></th>
+                <tr data-th-each="doctor, rowCount : ${doctors}">
+                    <th data-th-text="${rowCount.count}"></th>
+                    <!--<th data-th-text="${doctor.code}"></th>-->
+                    <th data-th-text="${doctor.name}"></th>
+                    <th data-th-text="${doctor.slmcNumber}"></th>
+                    <th data-th-text="${doctor.gender}"></th>
+                    <th data-th-text="${doctor.mobile}"></th>
+                    <th data-th-text="${doctor.consultation.name}"></th>
                     <th>
-                        <a id="doctorView" th:href="${'/doctor/' + doctor.id}" class="btn btn-success btn-sm"><i
+                        <a class="btn btn-success btn-sm"  data-th-href="${'/doctor/' + doctor.id}"><i
                                 class="fa fa-folder-open"></i>&nbsp;View</a>
-                        <a id="doctorEdit" th:href="${'/doctor/edit/' + doctor.id}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i>&nbsp;Edit</a>
-                        <a id="doctorRemove" th:href="${'/doctor/remove/' + doctor.id}"
-                           th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>
+                        <a class="btn btn-primary btn-sm" id="doctorEdit" data-th-href="${'/doctor/edit/' + doctor.id}"><i
+                                class="fa fa-edit"></i>&nbsp;Edit</a>
+                        <a class="btn btn-danger btn-sm" id="doctorRemove"
+                           data-th-href="${'/doctor/remove/' + doctor.id}"
+                           data-th-if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"><i class="fa fa-trash"></i>
                             Delete</a>
                     </th>
                 </tr>
@@ -65,10 +69,10 @@
             </table>
         </div>
     </div>
-    <div class="row" th:if="${ #lists.isEmpty(doctors)}">
+    <div class="row" data-th-if="${ #lists.isEmpty(doctors)}">
         <div class="col-sm-12">
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <button aria-label="Close" class="close" data-dismiss="alert" type="button">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h3 class="text-center text-danger">
@@ -86,9 +90,9 @@
     </div>
 </div>
 <!--footer include-->
-<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+<footer data-th-replace="~{fragments/footer :: footerFragment}"></footer>
 <!--script include-->
-<script th:replace="~{fragments/script :: scriptFragment}"></script>
+<script data-th-replace="~{fragments/script :: scriptFragment}"></script>
 
 </body>
 </html>
